@@ -23,7 +23,7 @@ licence_callback_fn = LexFloatClient.CallbackType(licence_callback)
 def main():    
     handle = ctypes.c_uint()
     # Set the product id
-    status = LexFloatClient.GetHandle("0cbda839-a2a6-4525-903f-ba729f8c6757", ctypes.byref(handle))
+    status = LexFloatClient.GetHandle("PASTE_PRODUCT_ID", ctypes.byref(handle))
     if LexFloatClient.StatusCodes.LF_OK != status:
         print("Error code: ", status)
         sys.exit(status)
