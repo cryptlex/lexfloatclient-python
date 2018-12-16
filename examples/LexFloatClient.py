@@ -50,44 +50,45 @@ STRTYPE = get_char_type()
 
 CallbackType = CFUNCTYPE(UNCHECKED(None), c_uint32)
 
-GetHandle = library.GetHandle
-GetHandle.argtypes = [CSTRTYPE, POINTER(c_uint32)]
-GetHandle.restype = c_int
+SetHostProductId = library.SetHostProductId
+SetHostProductId.argtypes = [CSTRTYPE]
+SetHostProductId.restype = c_int
 
-SetFloatServer = library.SetFloatServer
-SetFloatServer.argtypes = [c_uint32, CSTRTYPE, c_uint16]
-SetFloatServer.restype = c_int
+SetHostUrl = library.SetHostUrl
+SetHostUrl.argtypes = [CSTRTYPE]
+SetHostUrl.restype = c_int
 
-SetLicenseCallback = library.SetLicenseCallback
-SetLicenseCallback.argtypes = [c_uint32, CallbackType]
-SetLicenseCallback.restype = c_int
+SetFloatingLicenseCallback = library.SetFloatingLicenseCallback
+SetFloatingLicenseCallback.argtypes = [CallbackType]
+SetFloatingLicenseCallback.restype = c_int
 
-RequestLicense = library.RequestLicense
-RequestLicense.argtypes = [c_uint32]
-RequestLicense.restype = c_int
+SetFloatingClientMetadata = library.SetFloatingClientMetadata
+SetFloatingClientMetadata.argtypes = [CSTRTYPE, CSTRTYPE]
+SetFloatingClientMetadata.restype = c_int
 
-DropLicense = library.DropLicense
-DropLicense.argtypes = [c_uint32]
-DropLicense.restype = c_int
+GetHostLicenseMetadata = library.GetHostLicenseMetadata
+GetHostLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
+GetHostLicenseMetadata.restype = c_int
 
-HasLicense = library.HasLicense
-HasLicense.argtypes = [c_uint32]
-HasLicense.restype = c_int
+GetHostLicenseExpiryDate = library.GetHostLicenseExpiryDate
+GetHostLicenseExpiryDate.argtypes = [POINTER(c_uint32)]
+GetHostLicenseExpiryDate.restype = c_int
 
-FindHandle = library.FindHandle
-FindHandle.argtypes = [CSTRTYPE, POINTER(c_uint32)]
-FindHandle.restype = c_int
+RequestFloatingLicense = library.RequestFloatingLicense
+RequestFloatingLicense.argtypes = []
+RequestFloatingLicense.restype = c_int
 
-GetLicenseMetadata = library.GetLicenseMetadata
-GetLicenseMetadata.argtypes = [c_uint32, CSTRTYPE, STRTYPE, c_uint32]
-GetLicenseMetadata.restype = c_int
+DropFloatingLicense = library.DropFloatingLicense
+DropFloatingLicense.argtypes = []
+DropFloatingLicense.restype = c_int
 
-GlobalCleanUp = library.GlobalCleanUp
-GlobalCleanUp.argtypes = []
-GlobalCleanUp.restype = c_int
+HasFloatingLicense = library.HasFloatingLicense
+HasFloatingLicense.argtypes = []
+HasFloatingLicense.restype = c_int
 
 
 class StatusCodes:
+    
     LF_OK = 0
 
     LF_FAIL = 1
@@ -96,28 +97,44 @@ class StatusCodes:
 
     LF_E_CALLBACK = 41
 
-    LF_E_HANDLE = 42
+    LF_E_HOST_URL = 42
 
-    LF_E_SERVER_ADDRESS = 43
+    LF_E_TIME = 43
 
-    LF_E_SERVER_TIME = 44
+    LF_E_INET = 44
 
-    LF_E_TIME = 45
+    LF_E_NO_LICENSE = 45
 
-    LF_E_INET = 46
+    LF_E_LICENSE_EXISTS = 46
 
-    LF_E_NO_FREE_LICENSE = 47
+    LF_E_LICENSE_NOT_FOUND = 47
 
-    LF_E_LICENSE_EXISTS = 48
+    LF_E_LICENSE_EXPIRED_INET = 48
 
-    LF_E_LICENSE_EXPIRED = 49
+    LA_E_LICENSE_LIMIT_REACHED = 49
 
-    LF_E_LICENSE_EXPIRED_INET = 50
+    LF_E_BUFFER_SIZE = 50
 
-    LF_E_BUFFER_SIZE = 51
+    LF_E_METADATA_KEY_NOT_FOUND = 51
 
-    LF_E_METADATA_KEY_NOT_FOUND = 52
+    LF_E_METADATA_KEY_LENGTH = 52
 
-    LF_E_SERVER = 70
+    LF_E_METADATA_VALUE_LENGTH = 53
 
-    LF_E_CLIENT = 71
+    LF_E_FLOATING_CLIENT_METADATA_LIMIT = 54
+
+    LF_E_IP = 60
+
+    LF_E_CLIENT = 70
+
+    LF_E_SERVER = 71
+
+    LF_E_SERVER_TIME_MODIFIED = 72
+
+    LF_E_SERVER_LICENSE_NOT_ACTIVATED = 73
+
+    LF_E_SERVER_LICENSE_EXPIRED = 74
+
+    LF_E_SERVER_LICENSE_SUSPENDED = 75
+
+    LF_E_SERVER_LICENSE_GRACE_PERIOD_OVER = 76

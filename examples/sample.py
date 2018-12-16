@@ -6,39 +6,36 @@ import LexFloatClient
 # https://github.com/cryptlex/lexfloatclient-c/blob/master/examples/LexFloatStatusCodes.h
 
 def licence_callback(status):
-    if LexFloatClient.StatusCodes.LF_E_LICENSE_EXPIRED == status:
-        print("The lease expired before it could be renewed.")
+    if LexFloatClient.StatusCodes.LF_OK == status:
+        print("The license lease has renewed successfully.")
+    elif LexFloatClient.StatusCodes.LF_E_LICENSE_NOT_FOUND == status:
+        print("The license expired before it could be renewed.")
     elif LexFloatClient.StatusCodes.LF_E_LICENSE_EXPIRED_INET == status:
-        print("The lease expired due to network connection failure.")
-    elif LexFloatClient.StatusCodes.LF_E_SERVER_TIME == status:
-        print("The lease expired because Server System time was modified.")
-    elif LexFloatClient.StatusCodes.LF_E_TIME == status:
-        print("The lease expired because Client System time was modified.")
+        print("The license expired due to network connection failure.")
     else:
-        print("The lease expired due to some other reason: ", status)
+        print("The license renew failed due to other reason. Error code: ", status)
 
 # reference the callback to keep it alive
 licence_callback_fn = LexFloatClient.CallbackType(licence_callback)
 
 def main():    
-    handle = ctypes.c_uint()
     # Set the product id
-    status = LexFloatClient.GetHandle("PASTE_PRODUCT_ID", ctypes.byref(handle))
+    status = LexFloatClient.SetHostProductId("PASTE_PRODUCT_ID")
     if LexFloatClient.StatusCodes.LF_OK != status:
         print("Error code: ", status)
         sys.exit(status)
     # Set the float server
-    status = LexFloatClient.SetFloatServer(handle.value, "localhost", 8090)
+    status = LexFloatClient.SetHostUrl("http://localhost:8090")
     if LexFloatClient.StatusCodes.LF_OK != status:
         print("Error code: ", status)
         sys.exit(status)
     # Set the license callback
-    status = LexFloatClient.SetLicenseCallback(handle.value, licence_callback_fn)
+    status = LexFloatClient.SetFloatingLicenseCallback(licence_callback_fn)
     if LexFloatClient.StatusCodes.LF_OK != status:
         print("Error code: ", status)
         sys.exit(status)
     # Request license lease
-    status = LexFloatClient.RequestLicense(handle.value)
+    status = LexFloatClient.RequestFloatingLicense()
     if LexFloatClient.StatusCodes.LF_OK != status:
         print("Request license error code: ", status)
         sys.exit(status)
@@ -47,7 +44,7 @@ def main():
     # Request license metadata
     bufferSize = 256
     buffer = ctypes.create_string_buffer(bufferSize)
-    status = LexFloatClient.GetLicenseMetadata(handle.value, "key1", buffer, bufferSize)
+    status = LexFloatClient.GetHostLicenseMetadata("key1", buffer, bufferSize)
     if LexFloatClient.StatusCodes.LF_OK != status:
         print("Metadata request error code: ", status)
     else:
@@ -55,10 +52,9 @@ def main():
     print("Press enter to drop the license ...")
     sys.stdin.read(1)
     # Drop license lease
-    status = LexFloatClient.DropLicense(handle)
+    status = LexFloatClient.DropFloatingLicense()
     if LexFloatClient.StatusCodes.LF_OK != status:
         print("Drop license error code: ", status)
         sys.exit(status)
     print("Success! License dropped.")
-    LexFloatClient.GlobalCleanUp()
 main()
