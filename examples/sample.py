@@ -18,11 +18,17 @@ def licence_callback(status):
 # reference the callback to keep it alive
 licence_callback_fn = LexFloatClient.CallbackType(licence_callback)
 
-def get_string_buffer(size):
+def get_ctype_string_buffer(size):
     if sys.platform == 'win32':
         return ctypes.create_unicode_buffer(size)
     else:
         return ctypes.create_string_buffer(size)
+
+def get_ctype_string(input):
+    if sys.platform == 'win32':
+        return ctypes.c_wchar_p(input)
+    else:
+        return ctypes.c_char_p(input)
 
 def main():    
     # Set the product id
@@ -49,7 +55,7 @@ def main():
     sys.stdin.read(1)
     # Request license metadata
     bufferSize = 256
-    buffer = get_string_buffer(bufferSize)
+    buffer = get_ctype_string_buffer(bufferSize)
     status = LexFloatClient.GetHostLicenseMetadata("key1", buffer, bufferSize)
     if LexFloatClient.StatusCodes.LF_OK != status:
         print("Metadata request error code: ", status)
