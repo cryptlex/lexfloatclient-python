@@ -70,9 +70,17 @@ GetHostLicenseMetadata = library.GetHostLicenseMetadata
 GetHostLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetHostLicenseMetadata.restype = c_int
 
+GetHostLicenseMeterAttribute = library.GetHostLicenseMeterAttribute
+GetHostLicenseMeterAttribute.argtypes = [CSTRTYPE, POINTER(c_uint32), POINTER(c_uint32)]
+GetHostLicenseMeterAttribute.restype = c_int
+
 GetHostLicenseExpiryDate = library.GetHostLicenseExpiryDate
 GetHostLicenseExpiryDate.argtypes = [POINTER(c_uint32)]
 GetHostLicenseExpiryDate.restype = c_int
+
+GetFloatingClientMeterAttributeUses = library.GetFloatingClientMeterAttributeUses
+GetFloatingClientMeterAttributeUses.argtypes = [CSTRTYPE, POINTER(c_uint32)]
+GetFloatingClientMeterAttributeUses.restype = c_int
 
 RequestFloatingLicense = library.RequestFloatingLicense
 RequestFloatingLicense.argtypes = []
@@ -85,6 +93,18 @@ DropFloatingLicense.restype = c_int
 HasFloatingLicense = library.HasFloatingLicense
 HasFloatingLicense.argtypes = []
 HasFloatingLicense.restype = c_int
+
+IncrementFloatingClientMeterAttributeUses = library.IncrementFloatingClientMeterAttributeUses
+IncrementFloatingClientMeterAttributeUses.argtypes = [CSTRTYPE, c_uint32]
+IncrementFloatingClientMeterAttributeUses.restype = c_int
+
+DecrementFloatingClientMeterAttributeUses = library.DecrementFloatingClientMeterAttributeUses
+DecrementFloatingClientMeterAttributeUses.argtypes = [CSTRTYPE, c_uint32]
+DecrementFloatingClientMeterAttributeUses.restype = c_int
+
+ResetFloatingClientMeterAttributeUses = library.ResetFloatingClientMeterAttributeUses
+ResetFloatingClientMeterAttributeUses.argtypes = [CSTRTYPE]
+ResetFloatingClientMeterAttributeUses.restype = c_int
 
 
 class StatusCodes:
