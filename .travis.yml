@@ -4,7 +4,7 @@ python:
 - '3.7'
 script:
 - echo "Deploying to pypi..."
-before_deploy: 
+before_deploy:
 - python pre-publish.py
 deploy:
   provider: pypi
@@ -12,7 +12,8 @@ deploy:
   skip_existing: true
   user: adnan-kamili
   password:
-    secure: FXyKbrXpvgnLs3EbKb/GQTIoQG3Gs6e+dgDQ6vKaU+EkqW9M1NZrV6aLtUsM4Pi2/Z5yMB6+R6hYclZiaf4tDMkoZ2N6KWoZMVSwDIJky7Gc22ZTsL7hgmyFbRewHKkQ1mn46R7d/WetwaYozrturQ+/NUCFQOC68G6Xj43Vp1jP6HSLyH9EMis9GporSEGzkKc8pwA+s/aO6TmlYqcyicudIZoNhinB5Ar3Q7DPW0QqRvxehAeOKtlcmUTu8nFCfikTsY5XR6iYOPld0V6CxPfhcTilU3FJZ+oh3OT3AcnfwXJoHgwF4skfqTz3F01vCg+5gDekaRgdyKpLhrEECV5dIilN9k90rLQ0zMoJNWNRWYOc3/yBUa8eSdaNi8bZ7zoSoGElNCOaO6xoQCemFxGJH4KBMj9RFL8nTx2V+MohG1vw51pCDuq0b/tl8ivQRgLahmkBzjmyWHlUVBvJbwIBaJNnEP/47PgoU0cArnAqXw/hjQSOT831bVVhuD6zjB9wzKdjA/9y5jGbfNHG2hM1VoeIvpp1+C/W7MIH7N/+4yQYe6NS7r/Xf4JgGroDafL2lI/3UZWLT+Wv2Yk3R7F7NrD1u04JDEKlwVtAlMHLYVYL5OdUFPmlXX76tf092eSL9VppwVsbGcTuUfE21ypxrVtMKfEqT6R2OOKkcJE=
+    secure: PFQirHl9UHihi+zkww+HhRrwENKKOx26DVB8pbMJh8k5xNHo0P06d8S+JLj2ILlV/5lpqoDxkmZw+BpNUPHhWCUuO5ntKLVU6mAOatUAijUambp9cs9y826oNrvsESR8hs6VWg2n8ZT4rnW3n6KCxfYgFWWM8Eh846Vi+9L46fmYesJbcaiO0ZklE7cL5Hxlkb8Zcm4hWk6du8vQbemcv5EBJN+RD/CyV1KVdUiKfNWkhD0zUYCQEpzkaqhGp+iAthuuQrHMClQySOeKA5Z+PlhtMMECUrfubvnYEqblHGP3qD129XAR3MbJtriWo0rNYxbg3I5JbnmTAyRouEsrFcQPjFzpWMUcYNMYwc2u03dkO09jVTkfoP0a/RjmnFyATzn8dy4+cnVDUW0mqpqKcAOWypa+CB26+LXtRenqkV2J0AtOUVCBawa+REKBjgNVIgROevon9MrIIuSUjczrnro5FeIInVypPOL0V/Cig+7elyWFLydrjOM45/A8AQv+PHqeca4TPE1z2/tc84vCwi/aE+0zUK0kreACzF+/aJYTTr2WNcmzV5HlUQytYyJnpXQ4lhiMEjaK5sDDDfOrIC3YaqefmHJQi+IfrebID5SOG/PiQ8dz7jjWL0RxO3MZqCOlBqvbDrlTAFcX0NHVbbXea/LgwJE5qakBFajHWI0=
   distributions: sdist bdist_wheel
   on:
     tags: true
+  
