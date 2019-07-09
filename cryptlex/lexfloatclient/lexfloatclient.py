@@ -1,5 +1,5 @@
 import ctypes
-from cryptlex.lexfloatclient import lexactivator_native as LexFloatClientNative
+from cryptlex.lexfloatclient import lexfloatclient_native as LexFloatClientNative
 from cryptlex.lexfloatclient.lexfloatstatus_codes import LexFloatStatusCodes
 from cryptlex.lexfloatclient.lexfloatclient_exception import LexFloatClientException
 

@@ -5,9 +5,8 @@ import subprocess
 import os
 import shutil
 import io
-
 tmp_dir = "./tmp"
-lexfloatclient_libs_version = 'v3.7.1'
+lexfloatclient_libs_version = 'v4.1.0'
 
 
 class FileInfo(object):
@@ -31,7 +30,7 @@ def main():
     print("Downloading LexFloatClient library ...")
 
     base_url = 'https://dl.cryptlex.com/downloads/'
-    base_path = './cryptlex/lexactivator/libs'
+    base_path = './cryptlex/lexfloatclient/libs'
 
     files = [FileInfo('libs/clang/x86_64/libLexFloatClient.dylib',
                       base_path + '/macos/x86_64/libLexFloatClient.dylib')]
