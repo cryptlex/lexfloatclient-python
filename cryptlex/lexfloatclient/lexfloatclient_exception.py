@@ -5,6 +5,7 @@ class LexFloatClientException(Exception):
     def __init__(self, code):
         super(LexFloatClientException, self).__init__(
             LexFloatClientException.get_error_message(code))
+        self.message = LexFloatClientException.get_error_message(code)
         self.code = code
 
     @staticmethod
