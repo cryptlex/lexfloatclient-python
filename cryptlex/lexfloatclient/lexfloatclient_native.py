@@ -1,5 +1,9 @@
 from ctypes import *
-import os, sys, inspect
+import os
+import sys
+import platform
+import inspect
+import subprocess
 import ctypes
 import ctypes.util
 
@@ -12,16 +16,39 @@ def UNCHECKED(type):
         return c_void_p
 
 
+def is_os_64bit():
+    return platform.machine().endswith('64')
+
+
+def is_musl():
+    command = ['ldd', '--version']
+    try:
+        output = subprocess.check_output(
+            command, stderr=subprocess.STDOUT).decode()
+    except subprocess.CalledProcessError as e:
+        output = e.output.decode()
+    if 'musl' in output:
+        return True
+    return False
+
+
 def get_library_path():
+    compiler = 'gcc'
+    arch = 'x86'
+    if(is_os_64bit()):
+        arch = 'x86_64'
     # Get the working directory of this file
     filename = inspect.getframeinfo(inspect.currentframe()).filename
     dir_path = os.path.dirname(os.path.abspath(filename))
+    # dir_path = os.getcwd()
     if sys.platform == 'darwin':
-        return os.path.join(dir_path, "libLexFloatClient.dylib")
+        return os.path.join(dir_path, "libs/macos/"+arch+"/libLexFloatClient.dylib")
     elif sys.platform == 'linux':
-        return os.path.join(dir_path, "libLexFloatClient.so")
+        if(is_musl()):
+            compiler = 'musl'
+        return os.path.join(dir_path, "libs/linux/"+compiler+"/"+arch+"/libLexFloatClient.so")
     elif sys.platform == 'win32':
-        return os.path.join(dir_path, "LexFloatClient.dll")
+        return os.path.join(dir_path, "libs/win32/"+arch+"/LexFloatClient.dll")
     else:
         raise TypeError("Platform not supported!")
 
@@ -36,11 +63,34 @@ def load_library(path):
     else:
         raise TypeError("Platform not supported!")
 
+
 def get_char_type():
     if sys.platform == 'win32':
         return c_wchar_p
     else:
         return c_char_p
+
+
+def get_ctype_string_buffer(size):
+    if sys.platform == 'win32':
+        return ctypes.create_unicode_buffer(size)
+    else:
+        return ctypes.create_string_buffer(size)
+
+
+def get_ctype_string(input):
+    if sys.platform == 'win32':
+        return ctypes.c_wchar_p(input)
+    else:
+        return ctypes.c_char_p(input.encode('utf-8'))
+
+
+def byte_to_string(input):
+    if sys.platform == 'win32':
+        return input
+    else:
+        return input.decode('utf-8')
+
 
 library = load_library(get_library_path())
 
@@ -49,6 +99,7 @@ CSTRTYPE = get_char_type()
 STRTYPE = get_char_type()
 
 CallbackType = CFUNCTYPE(UNCHECKED(None), c_uint32)
+
 
 SetHostProductId = library.SetHostProductId
 SetHostProductId.argtypes = [CSTRTYPE]
@@ -105,56 +156,3 @@ DecrementFloatingClientMeterAttributeUses.restype = c_int
 ResetFloatingClientMeterAttributeUses = library.ResetFloatingClientMeterAttributeUses
 ResetFloatingClientMeterAttributeUses.argtypes = [CSTRTYPE]
 ResetFloatingClientMeterAttributeUses.restype = c_int
-
-
-class StatusCodes:
-    
-    LF_OK = 0
-
-    LF_FAIL = 1
-
-    LF_E_PRODUCT_ID = 40
-
-    LF_E_CALLBACK = 41
-
-    LF_E_HOST_URL = 42
-
-    LF_E_TIME = 43
-
-    LF_E_INET = 44
-
-    LF_E_NO_LICENSE = 45
-
-    LF_E_LICENSE_EXISTS = 46
-
-    LF_E_LICENSE_NOT_FOUND = 47
-
-    LF_E_LICENSE_EXPIRED_INET = 48
-
-    LF_E_LICENSE_LIMIT_REACHED = 49
-
-    LF_E_BUFFER_SIZE = 50
-
-    LF_E_METADATA_KEY_NOT_FOUND = 51
-
-    LF_E_METADATA_KEY_LENGTH = 52
-
-    LF_E_METADATA_VALUE_LENGTH = 53
-
-    LF_E_FLOATING_CLIENT_METADATA_LIMIT = 54
-
-    LF_E_IP = 60
-
-    LF_E_CLIENT = 70
-
-    LF_E_SERVER = 71
-
-    LF_E_SERVER_TIME_MODIFIED = 72
-
-    LF_E_SERVER_LICENSE_NOT_ACTIVATED = 73
-
-    LF_E_SERVER_LICENSE_EXPIRED = 74
-
-    LF_E_SERVER_LICENSE_SUSPENDED = 75
-
-    LF_E_SERVER_LICENSE_GRACE_PERIOD_OVER = 76
