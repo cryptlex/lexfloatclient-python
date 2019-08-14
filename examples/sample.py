@@ -1,6 +1,6 @@
 import time
 import sys
-from cryptlex.lexfloatclient.lexfloatclient import LexFloatClient, LexFloatStatusCodes, LexFloatClientException
+from cryptlex.lexfloatclient import LexFloatClient, LexFloatStatusCodes, LexFloatClientException
 # from cryptlex.lexfloatclient import *
 
 
