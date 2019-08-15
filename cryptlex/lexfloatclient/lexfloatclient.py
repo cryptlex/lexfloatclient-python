@@ -136,9 +136,9 @@ class LexFloatClient:
         allowed_uses = ctypes.c_uint()
         total_uses = ctypes.c_uint()
         status = LexFloatClientNative.GetHostLicenseMeterAttribute(
-            ctypes.byref(allowed_uses), ctypes.byref(total_uses))
+            cstring_name, ctypes.byref(allowed_uses), ctypes.byref(total_uses))
         if status == LexFloatStatusCodes.LF_OK:
-            return LicenseMeterAttribute(cstring_name, allowed_uses.value, total_uses.value)
+            return LicenseMeterAttribute(name, allowed_uses.value, total_uses.value)
         else:
             raise LexFloatClientException(status)
 
