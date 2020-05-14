@@ -6,7 +6,7 @@ import os
 import shutil
 import io
 tmp_dir = "./tmp"
-lexfloatclient_libs_version = 'v4.3.3'
+lexfloatclient_libs_version = 'v4.3.5'
 
 
 class FileInfo(object):
@@ -51,6 +51,8 @@ def main():
                  '/linux/gcc/x86_64/libLexFloatClient.so'),
         FileInfo('libs/gcc/i386/libLexFloatClient.so', base_path +
                  '/linux/gcc/x86/libLexFloatClient.so'),
+        FileInfo('libs/gcc/arm64/libLexFloatClient.so', base_path +
+                 '/linux/gcc/arm64/libLexFloatClient.so'),
         FileInfo('libs/musl/amd64/libLexFloatClient.so', base_path +
                  '/linux/musl/x86_64/libLexFloatClient.so'),
     ]
