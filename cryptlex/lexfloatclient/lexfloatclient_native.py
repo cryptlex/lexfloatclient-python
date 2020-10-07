@@ -53,7 +53,7 @@ def get_library_path():
     # dir_path = os.getcwd()
     if sys.platform == 'darwin':
         return os.path.join(dir_path, "libs/macos/"+arch+"/libLexFloatClient.dylib")
-    elif sys.platform == 'linux':
+    elif sys.platform.startswith('linux'):
         if(is_musl()):
             compiler = 'musl'
         return os.path.join(dir_path, "libs/linux/"+compiler+"/"+arch+"/libLexFloatClient.so")
@@ -66,7 +66,7 @@ def get_library_path():
 def load_library(path):
     if sys.platform == 'darwin':
         return ctypes.CDLL(path, ctypes.RTLD_GLOBAL)
-    elif sys.platform == 'linux':
+    elif sys.platform.startswith('linux'):
         return ctypes.cdll.LoadLibrary(path)
     elif sys.platform == 'win32':
         return ctypes.cdll.LoadLibrary(path)
