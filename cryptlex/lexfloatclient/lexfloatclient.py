@@ -7,10 +7,11 @@ callback_list = []
 
 
 class LicenseMeterAttribute(object):
-    def __init__(self, name, allowed_uses, total_uses):
+    def __init__(self, name, allowed_uses, total_uses, gross_uses):
         self.name = name
         self.allowed_uses = allowed_uses
         self.total_uses = total_uses
+        self.gross_uses = gross_uses
 
 
 class LexFloatClient:
@@ -120,7 +121,7 @@ class LexFloatClient:
 
     @staticmethod
     def GetHostLicenseMeterAttribute(name):
-        """Gets the license meter attribute allowed uses and total uses associated 
+        """Gets the license meter attribute allowed uses, total uses and gross uses associated 
         with the LexFloatServer license.
 
         Args:
@@ -135,10 +136,11 @@ class LexFloatClient:
         cstring_name = LexFloatClientNative.get_ctype_string(name)
         allowed_uses = ctypes.c_uint()
         total_uses = ctypes.c_uint()
+        gross_uses = ctypes.c_uint()
         status = LexFloatClientNative.GetHostLicenseMeterAttribute(
-            cstring_name, ctypes.byref(allowed_uses), ctypes.byref(total_uses))
+            cstring_name, ctypes.byref(allowed_uses), ctypes.byref(total_uses), ctypes.byref(gross_uses))
         if status == LexFloatStatusCodes.LF_OK:
-            return LicenseMeterAttribute(name, allowed_uses.value, total_uses.value)
+            return LicenseMeterAttribute(name, allowed_uses.value, total_uses.value, gross_uses.value)
         else:
             raise LexFloatClientException(status)
 
