@@ -32,8 +32,12 @@ def main():
     base_url = 'https://dl.cryptlex.com/downloads/'
     base_path = './cryptlex/lexfloatclient/libs'
 
-    files = [FileInfo('libs/clang/x86_64/libLexFloatClient.dylib',
-                      base_path + '/macos/x86_64/libLexFloatClient.dylib')]
+    files = [
+        FileInfo('libs/clang/x86_64/libLexFloatClient.dylib',
+                      base_path + '/macos/x86_64/libLexFloatClient.dylib'),
+        FileInfo('libs/clang/arm64/libLexFloatClient.dylib',
+                 base_path + '/macos/arm64/libLexFloatClient.dylib')
+                      ]
     url = '/LexFloatClient-Mac.zip'
     download(base_url + lexfloatclient_libs_version + url, files)
 
