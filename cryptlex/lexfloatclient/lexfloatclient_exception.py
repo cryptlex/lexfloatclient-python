@@ -44,6 +44,10 @@ class LexFloatClientException(Exception):
             return 'The meter attribute does not exist.'
         if code == LexFloatStatusCodes.LF_E_METER_ATTRIBUTE_USES_LIMIT_REACHED:
             return 'The meter attribute has reached it\'s usage limit.'
+        if code == LexFloatStatusCodes.LF_E_PRODUCT_VERSION_NOT_LINKED:
+            return 'No product version is linked with the license.'
+        if code == LexFloatStatusCodes.LF_E_FEATURE_FLAG_NOT_FOUND:
+            return 'The product version feature flag does not exist.'
         if code == LexFloatStatusCodes.LF_E_IP:
             return 'IP address is not allowed.'
         if code == LexFloatStatusCodes.LF_E_CLIENT:
