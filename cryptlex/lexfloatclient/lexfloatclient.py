@@ -102,7 +102,7 @@ class LexFloatClient:
             raise LexFloatClientException(status)
 
     @staticmethod
-    def GetProductVersionName():
+    def GetHostProductVersionName():
         """Gets the product version name.
 
         Raises:
@@ -114,13 +114,13 @@ class LexFloatClient:
 
         buffer_size = 256
         buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
-        status = LexFloatClientNative.GetProductVersionName(buffer,buffer_size)
+        status = LexFloatClientNative.GetHostProductVersionName(buffer,buffer_size)
         if status != LexFloatStatusCodes.LF_OK:
             raise LexFloatClientException(status)
         return LexFloatClientNative.byte_to_string(buffer.value)
 
     @staticmethod
-    def GetProductVersionDisplayName():
+    def GetHostProductVersionDisplayName():
         """Gets the product version display name.
 
         Raises:
@@ -132,13 +132,13 @@ class LexFloatClient:
 
         buffer_size = 256
         buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
-        status = LexFloatClientNative.GetProductVersionDisplayName(buffer,buffer_size)
+        status = LexFloatClientNative.GetHostProductVersionDisplayName(buffer,buffer_size)
         if status != LexFloatStatusCodes.LF_OK:
             raise LexFloatClientException(status)
         return LexFloatClientNative.byte_to_string(buffer.value)
 
     @staticmethod
-    def GetProductVersionFeatureFlag(name):
+    def GetHostProductVersionFeatureFlag(name):
         """Gets the product version feature flag.
 
         Args:
@@ -154,7 +154,7 @@ class LexFloatClient:
         enabled = ctypes.c_uint()
         buffer_size = 256
         buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
-        status = LexFloatClientNative.GetProductVersionFeatureFlag(cstring_name, ctypes.byref(enabled), buffer, buffer_size)
+        status = LexFloatClientNative.GetHostProductVersionFeatureFlag(cstring_name, ctypes.byref(enabled), buffer, buffer_size)
         if status == LexFloatStatusCodes.LF_OK:
             isEnabled = enabled.value > 0
             return ProductVersionFeatureFlag(name, isEnabled, LexFloatClientNative.byte_to_string(buffer.value))

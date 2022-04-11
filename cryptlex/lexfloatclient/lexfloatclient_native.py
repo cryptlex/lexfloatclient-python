@@ -127,17 +127,17 @@ SetFloatingClientMetadata = library.SetFloatingClientMetadata
 SetFloatingClientMetadata.argtypes = [CSTRTYPE, CSTRTYPE]
 SetFloatingClientMetadata.restype = c_int
 
-GetProductVersionName = library.GetProductVersionName
-GetProductVersionName.argtypes = [STRTYPE,c_uint32]
-GetProductVersionName.restype = c_int
+GetHostProductVersionName = library.GetHostProductVersionName
+GetHostProductVersionName.argtypes = [STRTYPE,c_uint32]
+GetHostProductVersionName.restype = c_int
 
-GetProductVersionDisplayName = library.GetProductVersionDisplayName
-GetProductVersionDisplayName.argtypes = [STRTYPE,c_uint32]
-GetProductVersionDisplayName.restype = c_int
+GetHostProductVersionDisplayName = library.GetHostProductVersionDisplayName
+GetHostProductVersionDisplayName.argtypes = [STRTYPE,c_uint32]
+GetHostProductVersionDisplayName.restype = c_int
 
-GetProductVersionFeatureFlag = library.GetProductVersionFeatureFlag
-GetProductVersionFeatureFlag.argtypes = [CSTRTYPE, POINTER(c_uint32), STRTYPE, c_uint32]
-GetProductVersionFeatureFlag.restype = c_int
+GetHostProductVersionFeatureFlag = library.GetHostProductVersionFeatureFlag
+GetHostProductVersionFeatureFlag.argtypes = [CSTRTYPE, POINTER(c_uint32), STRTYPE, c_uint32]
+GetHostProductVersionFeatureFlag.restype = c_int
 
 GetHostLicenseMetadata = library.GetHostLicenseMetadata
 GetHostLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
