@@ -6,14 +6,14 @@ from cryptlex.lexfloatclient.lexfloatclient_exception import LexFloatClientExcep
 callback_list = []
 
 
-class LicenseMeterAttribute(object):
+class HostLicenseMeterAttribute(object):
     def __init__(self, name, allowed_uses, total_uses, gross_uses):
         self.name = name
         self.allowed_uses = allowed_uses
         self.total_uses = total_uses
         self.gross_uses = gross_uses
 
-class ProductVersionFeatureFlag(object):
+class HostProductVersionFeatureFlag(object):
     def __init__(self, name, enabled, data):
         self.name = name
         self.enabled = enabled
@@ -148,7 +148,7 @@ class LexFloatClient:
                 LexFloatClientException
 
         Returns:
-                ProductVersionFeatureFlag: product version feature flag 
+                HostProductVersionFeatureFlag: product version feature flag 
         """
         cstring_name = LexFloatClientNative.get_ctype_string(name)
         enabled = ctypes.c_uint()
@@ -157,7 +157,7 @@ class LexFloatClient:
         status = LexFloatClientNative.GetHostProductVersionFeatureFlag(cstring_name, ctypes.byref(enabled), buffer, buffer_size)
         if status == LexFloatStatusCodes.LF_OK:
             isEnabled = enabled.value > 0
-            return ProductVersionFeatureFlag(name, isEnabled, LexFloatClientNative.byte_to_string(buffer.value))
+            return HostProductVersionFeatureFlag(name, isEnabled, LexFloatClientNative.byte_to_string(buffer.value))
         else:
             raise LexFloatClientException(status)
 
@@ -196,7 +196,7 @@ class LexFloatClient:
                 LexFloatClientException
 
         Returns:
-                LicenseMeterAttribute: values of meter attribute allowed and total uses
+                HostLicenseMeterAttribute: values of meter attribute allowed and total uses
         """
         cstring_name = LexFloatClientNative.get_ctype_string(name)
         allowed_uses = ctypes.c_uint()
@@ -205,7 +205,7 @@ class LexFloatClient:
         status = LexFloatClientNative.GetHostLicenseMeterAttribute(
             cstring_name, ctypes.byref(allowed_uses), ctypes.byref(total_uses), ctypes.byref(gross_uses))
         if status == LexFloatStatusCodes.LF_OK:
-            return LicenseMeterAttribute(name, allowed_uses.value, total_uses.value, gross_uses.value)
+            return HostLicenseMeterAttribute(name, allowed_uses.value, total_uses.value, gross_uses.value)
         else:
             raise LexFloatClientException(status)
 
