@@ -100,6 +100,24 @@ class LexFloatClient:
             cstring_key, cstring_value)
         if LexFloatStatusCodes.LF_OK != status:
             raise LexFloatClientException(status)
+         
+    @staticmethod
+    def GetFloatingClientLibraryVersion():
+        """Gets the floating client library version.
+
+        Raises:
+                LexFloatClientException
+        
+        Returns:
+                str: library version.
+        """
+
+        buffer_size = 256
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetFloatingClientLibraryVersion(buffer,buffer_size)
+        if status != LexFloatStatusCodes.LF_OK:
+            raise LexFloatClientException(status)
+        return LexFloatClientNative.byte_to_string(buffer.value)   
 
     @staticmethod
     def GetHostProductVersionName():
