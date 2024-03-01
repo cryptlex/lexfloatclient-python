@@ -89,7 +89,7 @@ class LexFloatClient:
 
         Args:
                 key (str): string of maximum length 256 characters with utf-8 encoding
-                value (str): string of maximum length 256 characters with utf-8 encoding
+                value (str): string of maximum length 4096 characters with utf-8 encoding
 
         Raises:
                 LexFloatClientException

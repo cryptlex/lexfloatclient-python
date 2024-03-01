@@ -37,7 +37,7 @@ class LexFloatClientException(Exception):
         if code == LexFloatStatusCodes.LF_E_METADATA_KEY_LENGTH:
             return 'Metadata key length is more than 256 characters.'
         if code == LexFloatStatusCodes.LF_E_METADATA_VALUE_LENGTH:
-            return 'Metadata value length is more than 256 characters.'
+            return 'Metadata value length is more than 4096 characters.'
         if code == LexFloatStatusCodes.LF_E_FLOATING_CLIENT_METADATA_LIMIT:
             return 'The floating client has reached it\'s metadata fields limit.'
         if code == LexFloatStatusCodes.LF_E_METER_ATTRIBUTE_NOT_FOUND:
