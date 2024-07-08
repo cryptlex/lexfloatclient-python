@@ -139,6 +139,10 @@ GetHostProductVersionDisplayName = library.GetHostProductVersionDisplayName
 GetHostProductVersionDisplayName.argtypes = [STRTYPE, c_uint32]
 GetHostProductVersionDisplayName.restype = c_int
 
+GetFloatingLicenseMode = library.GetFloatingLicenseMode
+GetFloatingLicenseMode.argtypes = [STRTYPE, c_uint32]
+GetFloatingLicenseMode.restype = c_int
+
 GetHostProductVersionFeatureFlag = library.GetHostProductVersionFeatureFlag
 GetHostProductVersionFeatureFlag.argtypes = [CSTRTYPE, POINTER(c_uint32), STRTYPE, c_uint32]
 GetHostProductVersionFeatureFlag.restype = c_int
