@@ -268,6 +268,28 @@ class LexFloatClient:
             raise LexFloatClientException(status)
 
     @staticmethod
+    def GetFloatingClientMetadata(key):
+        """Gets the value of the floating client metadata.
+
+        Args:
+                key (str): metadata key to retrieve the value
+
+        Raises:
+                LexFloatClientException
+
+        Returns:
+                str: value of metadata for the key
+        """
+        cstring_key = LexFloatClientNative.get_ctype_string(key)
+        buffer_size = 256
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetFloatingClientMetadata(
+            cstring_key, buffer, buffer_size)
+        if status != LexFloatStatusCodes.LF_OK:
+            raise LexFloatClientException(status)
+        return LexFloatClientNative.byte_to_string(buffer.value)
+
+    @staticmethod
     def RequestFloatingLicense():
         """Sends the request to lease the license from the LexFloatServer.
 

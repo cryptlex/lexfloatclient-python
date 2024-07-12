@@ -159,6 +159,11 @@ GetFloatingClientMeterAttributeUses = library.GetFloatingClientMeterAttributeUse
 GetFloatingClientMeterAttributeUses.argtypes = [CSTRTYPE, POINTER(c_uint32)]
 GetFloatingClientMeterAttributeUses.restype = c_int
 
+GetFloatingClientMetadata = library.GetFloatingClientMetadata
+GetFloatingClientMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
+GetFloatingClientMetadata.restype = c_int
+
+
 RequestFloatingLicense = library.RequestFloatingLicense
 RequestFloatingLicense.argtypes = []
 RequestFloatingLicense.restype = c_int
