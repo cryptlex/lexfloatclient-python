@@ -143,6 +143,10 @@ GetHostProductVersionFeatureFlag = library.GetHostProductVersionFeatureFlag
 GetHostProductVersionFeatureFlag.argtypes = [CSTRTYPE, POINTER(c_uint32), STRTYPE, c_uint32]
 GetHostProductVersionFeatureFlag.restype = c_int
 
+GetHostConfig = library.GetHostConfigInternal
+GetHostConfig.argtypes = [STRTYPE, c_uint32]
+GetHostConfig.restype = c_int
+
 GetHostLicenseMetadata = library.GetHostLicenseMetadata
 GetHostLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetHostLicenseMetadata.restype = c_int
