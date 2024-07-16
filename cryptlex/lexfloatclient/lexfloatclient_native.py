@@ -155,6 +155,10 @@ GetHostLicenseExpiryDate = library.GetHostLicenseExpiryDate
 GetHostLicenseExpiryDate.argtypes = [POINTER(c_uint32)]
 GetHostLicenseExpiryDate.restype = c_int
 
+GetFloatingClientLeaseExpiryDate = library.GetFloatingClientLeaseExpiryDate
+GetFloatingClientLeaseExpiryDate.argtypes = [POINTER(c_uint32)]
+GetFloatingClientLeaseExpiryDate.restype = c_int
+
 GetFloatingClientMeterAttributeUses = library.GetFloatingClientMeterAttributeUses
 GetFloatingClientMeterAttributeUses.argtypes = [CSTRTYPE, POINTER(c_uint32)]
 GetFloatingClientMeterAttributeUses.restype = c_int

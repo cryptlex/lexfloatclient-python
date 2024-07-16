@@ -244,6 +244,24 @@ class LexFloatClient:
             return expiry_date.value
         else:
             raise LexFloatClientException(status)
+    
+    @staticmethod
+    def GetFloatingClientLeaseExpiryDate():
+        """Gets the lease expiry date timestamp of the floating client.
+
+        Raises:
+                LexFloatClientException
+
+        Returns:
+                int: the timestamp
+        """
+        leaseExpiryDate = ctypes.c_uint()
+        status = LexFloatClientNative.GetFloatingClientLeaseExpiryDate(
+            ctypes.byref(leaseExpiryDate))
+        if status == LexFloatStatusCodes.LF_OK:
+            return leaseExpiryDate.value
+        else:
+            raise LexFloatClientException(status)
 
     @staticmethod
     def GetFloatingClientMeterAttributeUses(name):
