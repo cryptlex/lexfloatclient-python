@@ -103,8 +103,7 @@ class LexFloatClient:
          
     @staticmethod
     def GetFloatingClientLibraryVersion():
-        """Gets the mode of the floating license (online or offline).
-
+        """Gets floating client library version.
         Raises:
                 LexFloatClientException
         
