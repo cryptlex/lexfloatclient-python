@@ -270,7 +270,7 @@ class LexFloatClient:
     @staticmethod
     def RequestFloatingLicense():
         """Sends the request to lease the license from the LexFloatServer.
-
+        
         Raises:
                 LexFloatClientException
         """
@@ -278,6 +278,20 @@ class LexFloatClient:
         if LexFloatStatusCodes.LF_OK != status:
             raise LexFloatClientException(status)
 
+    @staticmethod
+    def RequestOfflineFloatingLicense(leaseDuration):
+        """Sends the request to lease the license from the LexFloatServer for offline usage.
+        
+        Args:
+                leaseDuration (int): seconds for which the lease should be obtained.
+        
+        Raises:
+                LexFloatClientException
+        """
+        status = LexFloatClientNative.RequestOfflineFloatingLicense(leaseDuration)
+        if LexFloatStatusCodes.LF_OK != status:
+            raise LexFloatClientException(status)
+    
     @staticmethod
     def DropFloatingLicense():
         """Sends the request to the LexFloatServer to free the license.

@@ -163,6 +163,10 @@ RequestFloatingLicense = library.RequestFloatingLicense
 RequestFloatingLicense.argtypes = []
 RequestFloatingLicense.restype = c_int
 
+RequestOfflineFloatingLicense = library.RequestOfflineFloatingLicense
+RequestOfflineFloatingLicense.argtypes = [c_uint32]
+RequestOfflineFloatingLicense.restype = c_int
+
 DropFloatingLicense = library.DropFloatingLicense
 DropFloatingLicense.argtypes = []
 DropFloatingLicense.restype = c_int
