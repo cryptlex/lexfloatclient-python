@@ -306,6 +306,8 @@ class LexFloatClient:
             return True
         elif LexFloatStatusCodes.LF_E_NO_LICENSE == status:
             return False
+        elif LexFloatStatusCodes.LF_FAIL == status:
+            return False
         else:
             raise LexFloatClientException(status)
 
