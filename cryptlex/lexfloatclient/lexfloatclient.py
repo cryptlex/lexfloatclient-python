@@ -21,8 +21,8 @@ class HostProductVersionFeatureFlag(object):
         self.data = data
 
 class HostConfig(object):
-    def __init__(self, hostConfig):
-        self.maxOfflineLeaseDuration = hostConfig.get("maxOfflineLeaseDuration")
+    def __init__(self, maxOfflineLeaseDuration):
+        self.maxOfflineLeaseDuration = maxOfflineLeaseDuration
 
 
 class LexFloatClient:
@@ -133,18 +133,18 @@ class LexFloatClient:
                 LexFloatClientException
         
         Returns:
-                str: host configuration.
+                HostConfig: host configuration.
         """
-        buffer_size = 4096
+        buffer_size = 1024      
         buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
         status = LexFloatClientNative.GetHostConfig(buffer, buffer_size)
         if status == LexFloatStatusCodes.LF_OK:
             host_config_json = LexFloatClientNative.byte_to_string(buffer.value)
             if not host_config_json.strip():
-                return []
+                return None
             else:
                 host_config = json.loads(host_config_json)
-                return [HostConfig(host_config_details) for host_config_details in host_config]
+                return HostConfig(host_config["maxOfflineLeaseDuration"])
         else:
             raise LexFloatClientException(status)
 
