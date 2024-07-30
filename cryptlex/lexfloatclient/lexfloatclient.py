@@ -217,9 +217,9 @@ class LexFloatClient:
                 HostLicenseMeterAttribute: values of meter attribute allowed and total uses
         """
         cstring_name = LexFloatClientNative.get_ctype_string(name)
-        allowed_uses = ctypes.c_uint()
-        total_uses = ctypes.c_uint()
-        gross_uses = ctypes.c_uint()
+        allowed_uses = ctypes.c_int64()
+        total_uses = ctypes.c_uint64()
+        gross_uses = ctypes.c_uint64()
         status = LexFloatClientNative.GetHostLicenseMeterAttribute(
             cstring_name, ctypes.byref(allowed_uses), ctypes.byref(total_uses), ctypes.byref(gross_uses))
         if status == LexFloatStatusCodes.LF_OK:
