@@ -104,6 +104,7 @@ class LexFloatClient:
     @staticmethod
     def GetFloatingClientLibraryVersion():
         """Gets floating client library version.
+        
         Raises:
                 LexFloatClientException
         
