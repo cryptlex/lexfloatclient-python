@@ -21,8 +21,8 @@ class HostProductVersionFeatureFlag(object):
         self.data = data
 
 class HostConfig(object):
-    def __init__(self, maxOfflineLeaseDuration):
-        self.maxOfflineLeaseDuration = maxOfflineLeaseDuration
+    def __init__(self, max_offline_lease_duration):
+        self.max_offline_lease_duration = max_offline_lease_duration
 
 
 class LexFloatClient:
@@ -127,7 +127,7 @@ class LexFloatClient:
      
     @staticmethod
     def GetHostConfig():
-        """Gets the host configuration.
+        """This function sends a network request to LexFloatServer to get the configuration details.
 
         Raises:
                 LexFloatClientException
