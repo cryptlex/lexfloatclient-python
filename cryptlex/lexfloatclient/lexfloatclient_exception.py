@@ -64,4 +64,18 @@ class LexFloatClientException(Exception):
             return 'The server license has been suspended.'
         if code == LexFloatStatusCodes.LF_E_SERVER_LICENSE_GRACE_PERIOD_OVER:
             return 'The grace period for server license is over.'
+        if code == LexFloatStatusCodes.LF_E_SYSTEM_PERMISSION:
+            return 'Insufficient system permissions.'
+        if code == LexFloatStatusCodes.LF_E_INVALID_PERMISSION_FLAG:
+            return 'Invalid permission flag.'
+        if code == LexFloatStatusCodes.LF_E_OFFLINE_FLOATING_LICENSE_NOT_ALLOWED:
+            return 'Offline floating license is not allowed for per-instance leasing strategy.'
+        if code == LexFloatStatusCodes.LF_E_MAX_OFFLINE_LEASE_DURATION_EXCEEDED:
+            return 'Maximum offline lease duration exceeded.'
+        if code == LexFloatStatusCodes.LF_E_ALLOWED_OFFLINE_FLOATING_CLIENTS_LIMIT_REACHED:
+            return 'Allowed offline floating clients limit reached.'
+        if code == LexFloatStatusCodes.LF_E_WMIC:
+            return "Fingerprint couldn't be generated because Windows Management Instrumentation (WMI) service has been disabled. This error is specific to Windows only."
+        if code == LexFloatStatusCodes.LF_E_MACHINE_FINGERPRINT:
+            return 'Machine fingerprint has changed since activation.'
         return 'Unknown error!'
