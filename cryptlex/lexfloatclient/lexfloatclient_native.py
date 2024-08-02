@@ -163,7 +163,6 @@ GetFloatingClientMetadata = library.GetFloatingClientMetadata
 GetFloatingClientMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetFloatingClientMetadata.restype = c_int
 
-
 RequestFloatingLicense = library.RequestFloatingLicense
 RequestFloatingLicense.argtypes = []
 RequestFloatingLicense.restype = c_int
