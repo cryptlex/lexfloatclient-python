@@ -282,8 +282,8 @@ class LexFloatClient:
             raise LexFloatClientException(status)
 
     @staticmethod
-    def SetPermissionFlag(flags):
-        """Sets the permission flags.
+    def SetPermissionFlag(flag):
+        """Sets the permission flag.
          
          This function must be called on every start of your program after SetHostProductId()
          function in case the application allows borrowing of licenses or system wide activation.
@@ -301,7 +301,7 @@ class LexFloatClient:
         Raises:
                 LexFloatClientException
         """
-        status = LexFloatClientNative.SetPermissionFlag(flags)
+        status = LexFloatClientNative.SetPermissionFlag(flag)
         if LexFloatStatusCodes.LF_OK != status:
             raise LexFloatClientException(status)
 
