@@ -278,7 +278,7 @@ class LexFloatClient:
                 LexFloatClientException
 
         Returns:
-                str: value of metadata for the key
+                str: value of the floating client metadata
         """
         cstring_key = LexFloatClientNative.get_ctype_string(key)
         buffer_size = 256
