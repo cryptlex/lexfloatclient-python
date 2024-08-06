@@ -160,7 +160,7 @@ GetHostLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetHostLicenseMetadata.restype = c_int
 
 GetHostLicenseMeterAttribute = library.GetHostLicenseMeterAttribute
-GetHostLicenseMeterAttribute.argtypes = [CSTRTYPE, POINTER(c_uint32), POINTER(c_uint32), POINTER(c_uint32)]
+GetHostLicenseMeterAttribute.argtypes = [CSTRTYPE, POINTER(c_int64), POINTER(c_uint64), POINTER(c_uint64)]
 GetHostLicenseMeterAttribute.restype = c_int
 
 GetHostLicenseExpiryDate = library.GetHostLicenseExpiryDate
