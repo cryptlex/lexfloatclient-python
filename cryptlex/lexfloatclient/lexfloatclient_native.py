@@ -127,6 +127,10 @@ SetFloatingClientMetadata = library.SetFloatingClientMetadata
 SetFloatingClientMetadata.argtypes = [CSTRTYPE, CSTRTYPE]
 SetFloatingClientMetadata.restype = c_int
 
+SetPermissionFlag = library.SetPermissionFlag
+SetPermissionFlag.argtypes = [c_uint32]
+SetPermissionFlag.restype = c_int
+
 GetFloatingClientLibraryVersion = library.GetFloatingClientLibraryVersion
 GetFloatingClientLibraryVersion.argtypes = [STRTYPE, c_uint32]
 GetFloatingClientLibraryVersion.restype = c_int
@@ -143,6 +147,10 @@ GetHostProductVersionFeatureFlag = library.GetHostProductVersionFeatureFlag
 GetHostProductVersionFeatureFlag.argtypes = [CSTRTYPE, POINTER(c_uint32), STRTYPE, c_uint32]
 GetHostProductVersionFeatureFlag.restype = c_int
 
+GetHostConfig = library.GetHostConfigInternal
+GetHostConfig.argtypes = [STRTYPE, c_uint32]
+GetHostConfig.restype = c_int
+
 GetHostLicenseMetadata = library.GetHostLicenseMetadata
 GetHostLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetHostLicenseMetadata.restype = c_int
@@ -155,9 +163,17 @@ GetHostLicenseExpiryDate = library.GetHostLicenseExpiryDate
 GetHostLicenseExpiryDate.argtypes = [POINTER(c_uint32)]
 GetHostLicenseExpiryDate.restype = c_int
 
+GetFloatingClientLeaseExpiryDate = library.GetFloatingClientLeaseExpiryDate
+GetFloatingClientLeaseExpiryDate.argtypes = [POINTER(c_uint32)]
+GetFloatingClientLeaseExpiryDate.restype = c_int
+
 GetFloatingClientMeterAttributeUses = library.GetFloatingClientMeterAttributeUses
 GetFloatingClientMeterAttributeUses.argtypes = [CSTRTYPE, POINTER(c_uint32)]
 GetFloatingClientMeterAttributeUses.restype = c_int
+
+GetFloatingClientMetadata = library.GetFloatingClientMetadata
+GetFloatingClientMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
+GetFloatingClientMetadata.restype = c_int
 
 RequestFloatingLicense = library.RequestFloatingLicense
 RequestFloatingLicense.argtypes = []
