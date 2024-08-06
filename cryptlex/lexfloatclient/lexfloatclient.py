@@ -109,6 +109,30 @@ class LexFloatClient:
             cstring_key, cstring_value)
         if LexFloatStatusCodes.LF_OK != status:
             raise LexFloatClientException(status)
+            
+    @staticmethod
+    def SetPermissionFlag(flag):
+        """Sets the permission flag.
+         
+         This function must be called on every start of your program after SetHostProductId()
+         function in case the application allows borrowing of licenses or system wide activation.
+
+        Args:
+                flags : depending on your application's requirements, choose one of 
+                the following values: LF_USER, LF_ALL_USERS.
+                
+                LF_USER: This flag indicates that the application does not require
+                admin or root permissions to run.
+                
+                LF_ALL_USERS: This flag is specifically designed for Windows and should be used 
+                for system-wide activations.
+        
+        Raises:
+                LexFloatClientException
+        """
+        status = LexFloatClientNative.SetPermissionFlag(flag)
+        if LexFloatStatusCodes.LF_OK != status:
+            raise LexFloatClientException(status)
          
     @staticmethod
     def GetFloatingClientLibraryVersion():
@@ -351,26 +375,16 @@ class LexFloatClient:
             raise LexFloatClientException(status)
 
     @staticmethod
-    def SetPermissionFlag(flag):
-        """Sets the permission flag.
-         
-         This function must be called on every start of your program after SetHostProductId()
-         function in case the application allows borrowing of licenses or system wide activation.
-
+    def RequestOfflineFloatingLicense(lease_duration):
+        """Sends the request to lease the license from the LexFloatServer for offline usage.
+        
         Args:
-                flags : depending on your application's requirements, choose one of 
-                the following values: LF_USER, LF_ALL_USERS.
-                
-                LF_USER: This flag indicates that the application does not require
-                admin or root permissions to run.
-                
-                LF_ALL_USERS: This flag is specifically designed for Windows and should be used 
-                for system-wide activations.
+                leaseDuration (int): seconds for which the lease should be obtained.
         
         Raises:
                 LexFloatClientException
         """
-        status = LexFloatClientNative.SetPermissionFlag(flag)
+        status = LexFloatClientNative.RequestOfflineFloatingLicense(lease_duration)
         if LexFloatStatusCodes.LF_OK != status:
             raise LexFloatClientException(status)
 

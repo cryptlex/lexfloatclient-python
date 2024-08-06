@@ -43,7 +43,7 @@ class LexFloatStatusCodes:
     LF_E_FEATURE_FLAG_NOT_FOUND = 58
     
     LF_E_SYSTEM_PERMISSION = 59
-    
+
     LF_E_IP = 60
     
     LF_E_INVALID_PERMISSION_FLAG = 61
