@@ -171,6 +171,10 @@ RequestFloatingLicense = library.RequestFloatingLicense
 RequestFloatingLicense.argtypes = []
 RequestFloatingLicense.restype = c_int
 
+SetPermissionFlag = library.SetPermissionFlag
+SetPermissionFlag.argtypes = [c_uint32]
+SetPermissionFlag.restype = c_int
+
 DropFloatingLicense = library.DropFloatingLicense
 DropFloatingLicense.argtypes = []
 DropFloatingLicense.restype = c_int

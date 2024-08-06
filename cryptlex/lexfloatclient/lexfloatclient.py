@@ -5,6 +5,9 @@ from cryptlex.lexfloatclient.lexfloatclient_exception import LexFloatClientExcep
 
 callback_list = []
 
+class PermissionFlags:
+        LF_USER = 10
+        LF_ALL_USERS = 11
 
 class HostLicenseMeterAttribute(object):
     def __init__(self, name, allowed_uses, total_uses, gross_uses):
@@ -315,6 +318,30 @@ class LexFloatClient:
                 LexFloatClientException
         """
         status = LexFloatClientNative.RequestFloatingLicense()
+        if LexFloatStatusCodes.LF_OK != status:
+            raise LexFloatClientException(status)
+
+    @staticmethod
+    def SetPermissionFlag(flag):
+        """Sets the permission flag.
+         
+         This function must be called on every start of your program after SetHostProductId()
+         function in case the application allows borrowing of licenses or system wide activation.
+
+        Args:
+                flags : depending on your application's requirements, choose one of 
+                the following values: LF_USER, LF_ALL_USERS.
+                
+                LF_USER: This flag indicates that the application does not require
+                admin or root permissions to run.
+                
+                LF_ALL_USERS: This flag is specifically designed for Windows and should be used 
+                for system-wide activations.
+        
+        Raises:
+                LexFloatClientException
+        """
+        status = LexFloatClientNative.SetPermissionFlag(flag)
         if LexFloatStatusCodes.LF_OK != status:
             raise LexFloatClientException(status)
 
