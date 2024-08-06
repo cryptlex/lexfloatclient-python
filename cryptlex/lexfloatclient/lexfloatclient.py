@@ -1,4 +1,5 @@
 import ctypes
+import json
 from cryptlex.lexfloatclient import lexfloatclient_native as LexFloatClientNative
 from cryptlex.lexfloatclient.lexfloatstatus_codes import LexFloatStatusCodes
 from cryptlex.lexfloatclient.lexfloatclient_exception import LexFloatClientException
@@ -21,6 +22,11 @@ class HostProductVersionFeatureFlag(object):
         self.name = name
         self.enabled = enabled
         self.data = data
+
+class HostConfig(object):
+    def __init__(self, max_offline_lease_duration):
+        self.max_offline_lease_duration = max_offline_lease_duration
+
 
 class LexFloatClient:
     @staticmethod
@@ -120,7 +126,30 @@ class LexFloatClient:
         status = LexFloatClientNative.GetFloatingClientLibraryVersion(buffer,buffer_size)
         if status != LexFloatStatusCodes.LF_OK:
             raise LexFloatClientException(status)
-        return LexFloatClientNative.byte_to_string(buffer.value)   
+        return LexFloatClientNative.byte_to_string(buffer.value)  
+     
+    @staticmethod
+    def GetHostConfig():
+        """This function sends a network request to LexFloatServer to get the configuration details.
+
+        Raises:
+                LexFloatClientException
+        
+        Returns:
+                HostConfig: host configuration.
+        """
+        buffer_size = 1024      
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetHostConfig(buffer, buffer_size)
+        if status == LexFloatStatusCodes.LF_OK:
+            host_config_json = LexFloatClientNative.byte_to_string(buffer.value)
+            if not host_config_json.strip():
+                return None
+            else:
+                host_config = json.loads(host_config_json)
+                return HostConfig(host_config["maxOfflineLeaseDuration"])
+        else:
+            raise LexFloatClientException(status)
 
     @staticmethod
     def GetHostProductVersionName():
