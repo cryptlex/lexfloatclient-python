@@ -1,1 +1,1 @@
-from cryptlex.lexfloatclient.lexfloatclient import LexFloatClient, LexFloatStatusCodes, LexFloatClientException
+from cryptlex.lexfloatclient.lexfloatclient import LexFloatClient, LexFloatStatusCodes, LexFloatClientException, PermissionFlags

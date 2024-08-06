@@ -1,10 +1,14 @@
 import ctypes
+import json
 from cryptlex.lexfloatclient import lexfloatclient_native as LexFloatClientNative
 from cryptlex.lexfloatclient.lexfloatstatus_codes import LexFloatStatusCodes
 from cryptlex.lexfloatclient.lexfloatclient_exception import LexFloatClientException
 
 callback_list = []
 
+class PermissionFlags:
+        LF_USER = 10
+        LF_ALL_USERS = 11
 
 class HostLicenseMeterAttribute(object):
     def __init__(self, name, allowed_uses, total_uses, gross_uses):
@@ -18,6 +22,11 @@ class HostProductVersionFeatureFlag(object):
         self.name = name
         self.enabled = enabled
         self.data = data
+
+class HostConfig(object):
+    def __init__(self, max_offline_lease_duration):
+        self.max_offline_lease_duration = max_offline_lease_duration
+
 
 class LexFloatClient:
     @staticmethod
@@ -100,6 +109,30 @@ class LexFloatClient:
             cstring_key, cstring_value)
         if LexFloatStatusCodes.LF_OK != status:
             raise LexFloatClientException(status)
+            
+    @staticmethod
+    def SetPermissionFlag(flag):
+        """Sets the permission flag.
+         
+         This function must be called on every start of your program after SetHostProductId()
+         function in case the application allows borrowing of licenses or system wide activation.
+
+        Args:
+                flags : depending on your application's requirements, choose one of 
+                the following values: LF_USER, LF_ALL_USERS.
+                
+                LF_USER: This flag indicates that the application does not require
+                admin or root permissions to run.
+                
+                LF_ALL_USERS: This flag is specifically designed for Windows and should be used 
+                for system-wide activations.
+        
+        Raises:
+                LexFloatClientException
+        """
+        status = LexFloatClientNative.SetPermissionFlag(flag)
+        if LexFloatStatusCodes.LF_OK != status:
+            raise LexFloatClientException(status)
          
     @staticmethod
     def GetFloatingClientLibraryVersion():
@@ -117,7 +150,30 @@ class LexFloatClient:
         status = LexFloatClientNative.GetFloatingClientLibraryVersion(buffer,buffer_size)
         if status != LexFloatStatusCodes.LF_OK:
             raise LexFloatClientException(status)
-        return LexFloatClientNative.byte_to_string(buffer.value)   
+        return LexFloatClientNative.byte_to_string(buffer.value)  
+     
+    @staticmethod
+    def GetHostConfig():
+        """This function sends a network request to LexFloatServer to get the configuration details.
+
+        Raises:
+                LexFloatClientException
+        
+        Returns:
+                HostConfig: host configuration.
+        """
+        buffer_size = 1024      
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetHostConfig(buffer, buffer_size)
+        if status == LexFloatStatusCodes.LF_OK:
+            host_config_json = LexFloatClientNative.byte_to_string(buffer.value)
+            if not host_config_json.strip():
+                return None
+            else:
+                host_config = json.loads(host_config_json)
+                return HostConfig(host_config["maxOfflineLeaseDuration"])
+        else:
+            raise LexFloatClientException(status)
 
     @staticmethod
     def GetHostProductVersionName():
@@ -244,6 +300,24 @@ class LexFloatClient:
             return expiry_date.value
         else:
             raise LexFloatClientException(status)
+    
+    @staticmethod
+    def GetFloatingClientLeaseExpiryDate():
+        """Gets the lease expiry date timestamp of the floating client.
+
+        Raises:
+                LexFloatClientException
+
+        Returns:
+                int: the timestamp
+        """
+        leaseExpiryDate = ctypes.c_uint()
+        status = LexFloatClientNative.GetFloatingClientLeaseExpiryDate(
+            ctypes.byref(leaseExpiryDate))
+        if status == LexFloatStatusCodes.LF_OK:
+            return leaseExpiryDate.value
+        else:
+            raise LexFloatClientException(status)
 
     @staticmethod
     def GetFloatingClientMeterAttributeUses(name):
@@ -266,6 +340,45 @@ class LexFloatClient:
             return uses.value
         else:
             raise LexFloatClientException(status)
+    
+    @staticmethod
+    def GetFloatingLicenseMode():
+        """Gets the mode of the floating license (online or offline).
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                ActivationMode: mode of floating license.
+        """
+        buffer_size = 256
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetFloatingLicenseMode(buffer,buffer_size)
+        if status != LexFloatStatusCodes.LF_OK:
+            raise LexFloatClientException(status)
+        return LexFloatClientNative.byte_to_string(buffer.value)   
+
+    @staticmethod
+    def GetFloatingClientMetadata(key):
+        """Gets the value of the floating client metadata.
+
+        Args:
+                key (str): metadata key to retrieve the value
+
+        Raises:
+                LexFloatClientException
+
+        Returns:
+                str: value of the floating client metadata
+        """
+        cstring_key = LexFloatClientNative.get_ctype_string(key)
+        buffer_size = 4096
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetFloatingClientMetadata(
+            cstring_key, buffer, buffer_size)
+        if status != LexFloatStatusCodes.LF_OK:
+            raise LexFloatClientException(status)
+        return LexFloatClientNative.byte_to_string(buffer.value)
 
     @staticmethod
     def RequestFloatingLicense():
@@ -275,6 +388,20 @@ class LexFloatClient:
                 LexFloatClientException
         """
         status = LexFloatClientNative.RequestFloatingLicense()
+        if LexFloatStatusCodes.LF_OK != status:
+            raise LexFloatClientException(status)
+
+    @staticmethod
+    def RequestOfflineFloatingLicense(lease_duration):
+        """Sends the request to lease the license from the LexFloatServer for offline usage.
+        
+        Args:
+                leaseDuration (int): seconds for which the lease should be obtained.
+        
+        Raises:
+                LexFloatClientException
+        """
+        status = LexFloatClientNative.RequestOfflineFloatingLicense(lease_duration)
         if LexFloatStatusCodes.LF_OK != status:
             raise LexFloatClientException(status)
 
