@@ -270,7 +270,7 @@ class LexFloatClient:
     @staticmethod
     def RequestFloatingLicense():
         """Sends the request to lease the license from the LexFloatServer.
-        
+
         Raises:
                 LexFloatClientException
         """
