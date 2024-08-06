@@ -281,7 +281,7 @@ class LexFloatClient:
                 str: value of the floating client metadata
         """
         cstring_key = LexFloatClientNative.get_ctype_string(key)
-        buffer_size = 256
+        buffer_size = 4096
         buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
         status = LexFloatClientNative.GetFloatingClientMetadata(
             cstring_key, buffer, buffer_size)
