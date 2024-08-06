@@ -340,6 +340,23 @@ class LexFloatClient:
             return uses.value
         else:
             raise LexFloatClientException(status)
+    
+    @staticmethod
+    def GetFloatingLicenseMode():
+        """Gets the mode of the floating license (online or offline).
+
+        Raises:
+                LexActivatorException
+
+        Returns:
+                ActivationMode: mode of floating license.
+        """
+        buffer_size = 256
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetFloatingLicenseMode(buffer,buffer_size)
+        if status != LexFloatStatusCodes.LF_OK:
+            raise LexFloatClientException(status)
+        return LexFloatClientNative.byte_to_string(buffer.value)   
 
     @staticmethod
     def GetFloatingClientMetadata(key):
