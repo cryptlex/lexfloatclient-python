@@ -58,6 +58,8 @@ class LexFloatStatusCodes:
 
     LF_E_MACHINE_FINGERPRINT = 66
 
+    LF_E_PROXY_NOT_TRUSTED = 67
+
     LF_E_CLIENT = 70
 
     LF_E_SERVER = 71

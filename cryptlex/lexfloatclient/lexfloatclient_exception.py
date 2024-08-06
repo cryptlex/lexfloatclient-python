@@ -78,4 +78,6 @@ class LexFloatClientException(Exception):
             return "Fingerprint couldn't be generated because Windows Management Instrumentation (WMI) service has been disabled. This error is specific to Windows only."
         if code == LexFloatStatusCodes.LF_E_MACHINE_FINGERPRINT:
             return 'Machine fingerprint has changed since activation.'
+        if code == LexFloatStatusCodes.LF_E_PROXY_NOT_TRUSTED:
+            return 'Request blocked due to untrusted proxy.'
         return 'Unknown error!'
