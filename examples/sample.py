@@ -18,14 +18,13 @@ def licence_callback_fn(status):
 def main():
     try:
         # Set the product id
-        LexFloatClient.SetHostProductId("de5c962f-75b0-417d-a72a-5b474b8cb4bb")
+        LexFloatClient.SetHostProductId("PASTE_PRODUCT_ID")
         # Set the float server
         LexFloatClient.SetHostUrl("http://localhost:8090")
         # Set the license callback
         LexFloatClient.SetFloatingLicenseCallback(licence_callback_fn)
         # Request license lease
         LexFloatClient.RequestFloatingLicense()
-        print("honfig",LexFloatClient.GetHostConfig().max_offline_lease_duration )
         print("Success! License acquired. Press enter to get the license metadata...")
         sys.stdin.read(1)
         # Request license metadata
