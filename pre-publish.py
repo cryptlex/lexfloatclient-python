@@ -6,7 +6,7 @@ import os
 import shutil
 import io
 tmp_dir = "./tmp"
-lexfloatclient_libs_version = "v4.9.0"
+lexfloatclient_libs_version = "v4.9.2"
 
 
 class FileInfo(object):
