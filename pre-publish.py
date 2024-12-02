@@ -45,7 +45,9 @@ def main():
         FileInfo('libs/vc14/x86/LexFloatClient.dll',
                  base_path + '/win32/x86/LexFloatClient.dll'),
         FileInfo('libs/vc14/x64/LexFloatClient.dll',
-                 base_path + '/win32/x86_64/LexFloatClient.dll')
+                 base_path + '/win32/x86_64/LexFloatClient.dll'),
+        FileInfo('libs/vc17/arm64/LexFloatClient.dll',
+                 base_path + '/win32/arm64/LexFloatClient.dll')
     ]
     url = '/LexFloatClient-Win.zip'
     download(base_url + lexfloatclient_libs_version + url, files)
