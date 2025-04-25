@@ -26,6 +26,7 @@ class HostProductVersionFeatureFlag(object):
 class HostFeatureEntitlement(object):
     def __init__(self, host_feature_entitlement_dict):
         self.feature_name = host_feature_entitlement_dict.get("featureName")
+        self.feature_display_name = host_feature_entitlement_dict.get("featureDisplayName")
         self.value = host_feature_entitlement_dict.get("value")
 
 
