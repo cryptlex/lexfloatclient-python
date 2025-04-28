@@ -1,10 +1,31 @@
 import ctypes
 import json
+import functools
+import warnings
 from cryptlex.lexfloatclient import lexfloatclient_native as LexFloatClientNative
 from cryptlex.lexfloatclient.lexfloatstatus_codes import LexFloatStatusCodes
 from cryptlex.lexfloatclient.lexfloatclient_exception import LexFloatClientException
 
 callback_list = []
+
+def deprecated(alternative):
+    """This is a decorator which can be used to mark functions as deprecated.
+    It will result in a warning being emitted when the function is used.
+    
+    Args:
+        alternative (str): Name of the alternative function to use
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            warnings.warn(
+                f"The function {func.__name__}() is deprecated. Use {alternative}() instead.",
+                category=DeprecationWarning,
+                stacklevel=2
+            )
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 class PermissionFlags:
         LF_USER = 10
@@ -183,6 +204,7 @@ class LexFloatClient:
             raise LexFloatClientException(status)
 
     @staticmethod
+    @deprecated("GetHostLicenseEntitlementSetName")
     def GetHostProductVersionName():
         """Gets the product version name.
 
@@ -201,6 +223,7 @@ class LexFloatClient:
         return LexFloatClientNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("GetHostLicenseEntitlementSetDisplayName")
     def GetHostProductVersionDisplayName():
         """Gets the product version display name.
 
@@ -219,6 +242,7 @@ class LexFloatClient:
         return LexFloatClientNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("GetHostFeatureEntitlement")
     def GetHostProductVersionFeatureFlag(name):
         """Gets the product version feature flag.
 
