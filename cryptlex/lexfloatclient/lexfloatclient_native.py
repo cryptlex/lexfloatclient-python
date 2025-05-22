@@ -155,6 +155,22 @@ GetHostConfig = library.GetHostConfigInternal
 GetHostConfig.argtypes = [STRTYPE, c_uint32]
 GetHostConfig.restype = c_int
 
+GetHostLicenseEntitlementSetName = library.GetHostLicenseEntitlementSetName
+GetHostLicenseEntitlementSetName.argtypes = [STRTYPE, c_uint32]
+GetHostLicenseEntitlementSetName.restype = c_int
+
+GetHostLicenseEntitlementSetDisplayName = library.GetHostLicenseEntitlementSetDisplayName
+GetHostLicenseEntitlementSetDisplayName.argtypes = [STRTYPE, c_uint32]
+GetHostLicenseEntitlementSetDisplayName.restype = c_int
+
+GetHostFeatureEntitlements = library.GetHostFeatureEntitlementsInternal
+GetHostFeatureEntitlements.argtypes = [STRTYPE, c_uint32]
+GetHostFeatureEntitlements.restype = c_int
+
+GetHostFeatureEntitlement = library.GetHostFeatureEntitlementInternal
+GetHostFeatureEntitlement.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
+GetHostFeatureEntitlement.restype = c_int
+
 GetHostLicenseMetadata = library.GetHostLicenseMetadata
 GetHostLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetHostLicenseMetadata.restype = c_int

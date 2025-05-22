@@ -1,10 +1,31 @@
 import ctypes
 import json
+import functools
+import warnings
 from cryptlex.lexfloatclient import lexfloatclient_native as LexFloatClientNative
 from cryptlex.lexfloatclient.lexfloatstatus_codes import LexFloatStatusCodes
 from cryptlex.lexfloatclient.lexfloatclient_exception import LexFloatClientException
 
 callback_list = []
+
+def deprecated(alternative):
+    """This is a decorator which can be used to mark functions as deprecated.
+    It will result in a warning being emitted when the function is used.
+    
+    Args:
+        alternative (str): Name of the alternative function to use
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            warnings.warn(
+                f"The function {func.__name__}() is deprecated. Use {alternative}() instead.",
+                category=DeprecationWarning,
+                stacklevel=2
+            )
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
 
 class PermissionFlags:
         LF_USER = 10
@@ -22,6 +43,13 @@ class HostProductVersionFeatureFlag(object):
         self.name = name
         self.enabled = enabled
         self.data = data
+
+class HostFeatureEntitlement(object):
+    def __init__(self, host_feature_entitlement_dict):
+        self.feature_name = host_feature_entitlement_dict.get("featureName")
+        self.feature_display_name = host_feature_entitlement_dict.get("featureDisplayName")
+        self.value = host_feature_entitlement_dict.get("value")
+
 
 class HostConfig(object):
     def __init__(self, max_offline_lease_duration):
@@ -176,6 +204,7 @@ class LexFloatClient:
             raise LexFloatClientException(status)
 
     @staticmethod
+    @deprecated("GetHostLicenseEntitlementSetName")
     def GetHostProductVersionName():
         """Gets the product version name.
 
@@ -194,6 +223,7 @@ class LexFloatClient:
         return LexFloatClientNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("GetHostLicenseEntitlementSetDisplayName")
     def GetHostProductVersionDisplayName():
         """Gets the product version display name.
 
@@ -212,6 +242,7 @@ class LexFloatClient:
         return LexFloatClientNative.byte_to_string(buffer.value)
 
     @staticmethod
+    @deprecated("GetHostFeatureEntitlement")
     def GetHostProductVersionFeatureFlag(name):
         """Gets the product version feature flag.
 
@@ -232,6 +263,93 @@ class LexFloatClient:
         if status == LexFloatStatusCodes.LF_OK:
             isEnabled = enabled.value > 0
             return HostProductVersionFeatureFlag(name, isEnabled, LexFloatClientNative.byte_to_string(buffer.value))
+        else:
+            raise LexFloatClientException(status)
+        
+    @staticmethod
+    def GetHostLicenseEntitlementSetName():
+        """Gets the name of the entitlement set associated with the LexFloatServer license.
+
+        Raises:
+                LexFloatClientException
+
+        Returns:
+                str: host license entitlement set name
+        """
+        buffer_size = 256
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetHostLicenseEntitlementSetName(buffer, buffer_size)
+        if status != LexFloatStatusCodes.LF_OK:
+            raise LexFloatClientException(status)
+        return LexFloatClientNative.byte_to_string(buffer.value)
+    
+    @staticmethod
+    def GetHostLicenseEntitlementSetDisplayName():
+        """Gets the display name of the entitlement set associated with the LexFloatServer license.
+
+        Raises:
+                LexFloatClientException
+
+        Returns:
+                str: host license entitlement set display name
+        """
+        buffer_size = 256
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetHostLicenseEntitlementSetDisplayName(buffer, buffer_size)
+        if status != LexFloatStatusCodes.LF_OK:
+            raise LexFloatClientException(status)
+        return LexFloatClientNative.byte_to_string(buffer.value)
+    
+    @staticmethod
+    def GetHostFeatureEntitlements():
+        """Gets the feature entitlements associated with the LexFloatServer license.
+
+        Feature entitlements can be linked directly to a license (license feature entitlements) 
+        or via entitlement sets. If a feature entitlement is defined in both, the value from 
+        the license feature entitlement takes precedence, overriding the entitlement set value.
+
+        Raises:
+                LexFloatClientException
+
+        Returns:
+                HostFeatureEntitlements[]: list of host feature entitlements
+        """
+        buffer_size = 4096
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetHostFeatureEntitlements(buffer, buffer_size)
+        if status == LexFloatStatusCodes.LF_OK:
+            host_feature_entitlements_json = LexFloatClientNative.byte_to_string(buffer.value)
+            if not host_feature_entitlements_json.strip():
+                return []
+            else:
+                host_feature_entitlements = json.loads(host_feature_entitlements_json)
+                host_feature_entitlements_list = [HostFeatureEntitlement(feature_detail) for feature_detail in host_feature_entitlements]
+                return host_feature_entitlements_list
+        else:
+            raise LexFloatClientException(status)
+        
+    @staticmethod
+    def GetHostFeatureEntitlement(feature_name):
+        """Gets the feature entitlement associated with the LexFloatServer license.
+
+        Feature entitlements can be linked directly to a license (license feature entitlements) 
+        or via entitlement sets. If a feature entitlement is defined in both, the value from 
+        the license feature entitlement takes precedence, overriding the entitlement set value.
+
+        Raises:
+                LexFloatClientException
+
+        Returns:
+                HostFeatureEntitlement: host feature entitlement
+        """
+        cstring_feature_name = LexFloatClientNative.get_ctype_string(feature_name)
+        buffer_size = 1024
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetHostFeatureEntitlement(cstring_feature_name, buffer, buffer_size)
+        if status == LexFloatStatusCodes.LF_OK:
+            host_feature_entitlement_json = LexFloatClientNative.byte_to_string(buffer.value)
+            host_feature_entitlement = json.loads(host_feature_entitlement_json)
+            return HostFeatureEntitlement(host_feature_entitlement)
         else:
             raise LexFloatClientException(status)
 

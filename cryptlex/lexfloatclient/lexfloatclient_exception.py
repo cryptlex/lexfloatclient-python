@@ -80,4 +80,8 @@ class LexFloatClientException(Exception):
             return 'Machine fingerprint has changed since activation.'
         if code == LexFloatStatusCodes.LF_E_PROXY_NOT_TRUSTED:
             return 'Request blocked due to untrusted proxy.'
+        if code == LexFloatStatusCodes.LF_E_ENTITLEMENT_SET_NOT_LINKED:
+            return 'No entitlement set is linked to the license.'
+        if code == LexFloatStatusCodes.LF_E_FEATURE_ENTITLEMENT_NOT_FOUND:
+            return 'The feature entitlement does not exist.'
         return 'Unknown error!'
