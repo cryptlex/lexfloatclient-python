@@ -368,7 +368,7 @@ class LexFloatClient:
                 str: value of metadata for the key
         """
         cstring_key = LexFloatClientNative.get_ctype_string(key)
-        buffer_size = 256
+        buffer_size = 4096
         buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
         status = LexFloatClientNative.GetHostLicenseMetadata(
             cstring_key, buffer, buffer_size)
