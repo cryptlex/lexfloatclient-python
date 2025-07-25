@@ -354,6 +354,29 @@ class LexFloatClient:
             raise LexFloatClientException(status)
 
     @staticmethod
+    def GetHostProductMetadata(key):
+        """Get the value of the product metadata field associated with the
+        product metadata key.
+
+        Args:
+                key (str): metadata key to retrieve the value
+
+        Raises:
+                LexFloatClientException
+
+        Returns:
+                str: value of metadata for the key
+        """
+        cstring_key = LexFloatClientNative.get_ctype_string(key)
+        buffer_size = 4096
+        buffer = LexFloatClientNative.get_ctype_string_buffer(buffer_size)
+        status = LexFloatClientNative.GetHostProductMetadata(
+            cstring_key, buffer, buffer_size)
+        if status != LexFloatStatusCodes.LF_OK:
+            raise LexFloatClientException(status)
+        return LexFloatClientNative.byte_to_string(buffer.value)
+
+    @staticmethod
     def GetHostLicenseMetadata(key):
         """Get the value of the license metadata field associated with the
         LexFloatServer license key.

@@ -171,6 +171,10 @@ GetHostFeatureEntitlement = library.GetHostFeatureEntitlementInternal
 GetHostFeatureEntitlement.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetHostFeatureEntitlement.restype = c_int
 
+GetHostProductMetadata = library.GetHostProductMetadata
+GetHostProductMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
+GetHostProductMetadata.restype = c_int
+
 GetHostLicenseMetadata = library.GetHostLicenseMetadata
 GetHostLicenseMetadata.argtypes = [CSTRTYPE, STRTYPE, c_uint32]
 GetHostLicenseMetadata.restype = c_int
