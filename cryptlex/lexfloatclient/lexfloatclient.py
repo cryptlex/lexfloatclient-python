@@ -355,8 +355,7 @@ class LexFloatClient:
 
     @staticmethod
     def GetHostProductMetadata(key):
-        """Get the value of the product metadata field associated with the
-        product metadata key.
+        """Gets the value of the product metadata.
 
         Args:
                 key (str): metadata key to retrieve the value
