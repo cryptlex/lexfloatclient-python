@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="cryptlex.lexfloatclient",
     version="4.12.2",
-    author="Cryptlex, LLC",
+    author="Cryptlex LLP",
     author_email="support@cryptlex.com",
     description="LexFloatClient API wrapper for Python",
     long_description=long_description,
