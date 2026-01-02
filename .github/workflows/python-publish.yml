@@ -31,3 +31,10 @@ jobs:
       run: |
         python setup.py sdist bdist_wheel
         twine upload dist/*
+
+    - name: Extract version and create tag
+      run: |
+        VERSION=$(sed -n 's/^[[:space:]]*version="\([^"]*\)".*/\1/p' setup.py)
+
+        git tag "$VERSION" 2>/dev/null || echo "Tag already exists"
+        git push origin "$VERSION" || true
