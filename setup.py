@@ -15,11 +15,13 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     package_data={'cryptlex': ['lexfloatclient/libs/win32/**/*.dll', 'lexfloatclient/libs/linux/**/**/*.so', 'lexfloatclient/libs/macos/**/*.dylib']},
     keywords='cryptlex lexfloatclient licensing',
+    license='Proprietary',
     classifiers=[
         "Programming Language :: Python :: 2",
         'Programming Language :: Python :: 3',
-        "License :: OSI Approved :: MIT License",
+        "License :: Other/Proprietary License",
         'Intended Audience :: Developers',
         "Operating System :: OS Independent",
-    ]
+    ],
+    include_package_data=True,
 )
