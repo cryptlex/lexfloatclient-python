@@ -163,6 +163,10 @@ GetHostLicenseEntitlementSetDisplayName = library.GetHostLicenseEntitlementSetDi
 GetHostLicenseEntitlementSetDisplayName.argtypes = [STRTYPE, c_uint32]
 GetHostLicenseEntitlementSetDisplayName.restype = c_int
 
+GetHostLicenseEntitlementSetTier = library.GetHostLicenseEntitlementSetTier
+GetHostLicenseEntitlementSetTier.argtypes = [POINTER(c_int64)]
+GetHostLicenseEntitlementSetTier.restype = c_int
+
 GetHostFeatureEntitlements = library.GetHostFeatureEntitlementsInternal
 GetHostFeatureEntitlements.argtypes = [STRTYPE, c_uint32]
 GetHostFeatureEntitlements.restype = c_int
