@@ -302,6 +302,23 @@ class LexFloatClient:
         return LexFloatClientNative.byte_to_string(buffer.value)
     
     @staticmethod
+    def GetHostLicenseEntitlementSetTier():
+        """Gets the host license entitlement set tier.
+
+		Raises:
+				LexFloatClientException
+
+		Returns:
+				int: tier of the host license entitlement set.
+		"""
+        tier = ctypes.c_int64()
+        status = LexFloatClientNative.GetHostLicenseEntitlementSetTier(
+        ctypes.byref(tier))
+        if status != LexFloatStatusCodes.LF_OK:
+            raise LexFloatClientException(status)
+        return tier.value
+
+    @staticmethod
     def GetHostFeatureEntitlements():
         """Gets the feature entitlements associated with the LexFloatServer license.
 
