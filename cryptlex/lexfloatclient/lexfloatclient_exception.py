@@ -84,4 +84,6 @@ class LexFloatClientException(Exception):
             return 'No entitlement set is linked to the license.'
         if code == LexFloatStatusCodes.LF_E_FEATURE_ENTITLEMENT_NOT_FOUND:
             return 'The feature entitlement does not exist.'
+        if code == LexFloatStatusCodes.LF_E_LEASE_EXCEEDS_SERVER_LICENSE_EXPIRY:
+            return 'Requested offline lease duration exceeds server license expiry date.'
         return 'Unknown error!'
