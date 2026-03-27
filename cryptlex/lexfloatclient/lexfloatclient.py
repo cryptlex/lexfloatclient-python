@@ -49,6 +49,7 @@ class HostFeatureEntitlement(object):
         self.feature_name = host_feature_entitlement_dict.get("featureName")
         self.feature_display_name = host_feature_entitlement_dict.get("featureDisplayName")
         self.value = host_feature_entitlement_dict.get("value")
+        self.base_value = host_feature_entitlement_dict.get("baseValue")
         self.expires_at = host_feature_entitlement_dict.get("expiresAt")
 
 
